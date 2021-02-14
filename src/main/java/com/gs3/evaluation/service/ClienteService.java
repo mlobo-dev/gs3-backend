@@ -6,6 +6,7 @@ import com.gs3.evaluation.dto.ClienteDTO;
 import com.gs3.evaluation.exception.ObjectAlreadyExistsException;
 import com.gs3.evaluation.exception.ObjectNotFoundException;
 import com.gs3.evaluation.mapper.ClienteCadastroMapper;
+import com.gs3.evaluation.mapper.ClienteMapper;
 import com.gs3.evaluation.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class ClienteService {
     private final ClienteRepository repository;
     private final ClienteCadastroMapper cadastroMapper;
     private final EnderecoService enderecoService;
+    private final ClienteMapper clienteMapper;
 
     @Transactional
     public List<Cliente> listarTodos() {
@@ -44,13 +46,22 @@ public class ClienteService {
         }
         Cliente cliente = cadastroMapper.toEntity(dto);
         cliente.setEndereco(enderecoService.buscarViaCep(dto.getCep()));
-        if (isEmptyOrNull(dto.getComplementoEndereco())) {
+        if (!isEmptyOrNull(dto.getComplementoEndereco())) {
             cliente.getEndereco().setComplemento(dto.getComplementoEndereco());
         }
         return repository.save(cliente);
     }
 
     public Cliente editar(ClienteDTO dto) {
-        return null;
+        return repository.save(atualizarDados(buscarPeloId(dto.getId()), clienteMapper.toEntity(dto)));
+    }
+
+    private Cliente atualizarDados(Cliente cliente, Cliente dto) {
+        cliente.setEndereco(dto.getEndereco() != null ? dto.getEndereco() : cliente.getEndereco());
+        cliente.setTelefones(dto.getTelefones() != null ? dto.getTelefones() : cliente.getTelefones());
+        cliente.setEmails(dto.getEmails() != null ? dto.getEmails() : cliente.getEmails());
+        cliente.setCpf(!isEmptyOrNull(dto.getCpf()) ? dto.getCpf() : cliente.getCpf());
+        cliente.setNome(!isEmptyOrNull(dto.getNome()) ? dto.getCpf() : cliente.getNome());
+        return cliente;
     }
 }
