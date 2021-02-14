@@ -4,20 +4,19 @@ import com.gs3.evaluation.enums.TipoTelefoneEnum;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
-@Entity
-@Table(name = "TB_TELEFONE")
 public class TelefoneDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COD_TELEFONE")
+
     private Long id;
 
-    @Column(name = "NUMERO_TELEFONE")
+    @NotNull(message = "Número do telefone  é obrigatório")
+    @NotEmpty(message = "Número do telefone  é obrigatório")
     private String numeroTelefone;
 
-    @Column(name = "TIPO_TELEFONE")
+    @NotNull(message = "Tipo do telefone  é obrigatório")
     private TipoTelefoneEnum tipo;
 }

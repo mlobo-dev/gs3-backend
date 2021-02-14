@@ -15,6 +15,6 @@ public class Email {
     private Long id;
 
     @Column(name = "ENDERECO_EMAIL")
-    private String endereco;
+    private String enderecoEmail;
 
 }
