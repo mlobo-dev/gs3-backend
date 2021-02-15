@@ -1,11 +1,8 @@
 package com.gs3.evaluation.service;
 
 import com.gs3.evaluation.domain.Cliente;
-import com.gs3.evaluation.dto.ClienteCadastroDTO;
 import com.gs3.evaluation.dto.ClienteDTO;
-import com.gs3.evaluation.exception.ObjectAlreadyExistsException;
 import com.gs3.evaluation.exception.ObjectNotFoundException;
-import com.gs3.evaluation.mapper.ClienteCadastroMapper;
 import com.gs3.evaluation.mapper.ClienteMapper;
 import com.gs3.evaluation.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +18,9 @@ import static com.gs3.evaluation.utils.StringValidator.isEmptyOrNull;
 public class ClienteService {
 
     private final ClienteRepository repository;
-    private final ClienteCadastroMapper cadastroMapper;
-    private final EnderecoService enderecoService;
-    private final ClienteMapper clienteMapper;
+    private final UsuarioService usuarioService;
+
+    private final ClienteMapper mapper;
 
     @Transactional
     public List<Cliente> listarTodos() {
@@ -40,20 +37,19 @@ public class ClienteService {
         repository.deleteById(id);
     }
 
-    public Cliente salvar(ClienteCadastroDTO dto) {
-        if (repository.existsByCpf(dto.getCpf())) {
-            throw new ObjectAlreadyExistsException("Cliente já castrado");
+    public Cliente salvar(ClienteDTO dto) {
+        if (dto.getId() != null) {
+            return editar(dto);
         }
-        Cliente cliente = cadastroMapper.toEntity(dto);
-        cliente.setEndereco(enderecoService.buscarViaCep(dto.getCep()));
-        if (!isEmptyOrNull(dto.getComplementoEndereco())) {
-            cliente.getEndereco().setComplemento(dto.getComplementoEndereco());
-        }
+
+        Cliente cliente = mapper.toEntity(dto);
+        cliente.setUsuario(usuarioService.buscarPeloId(dto.getIdUsuario()));
+
         return repository.save(cliente);
     }
 
     public Cliente editar(ClienteDTO dto) {
-        return repository.save(atualizarDados(buscarPeloId(dto.getId()), clienteMapper.toEntity(dto)));
+        return repository.save(atualizarDados(buscarPeloId(dto.getId()), mapper.toEntity(dto)));
     }
 
     private Cliente atualizarDados(Cliente cliente, Cliente dto) {
@@ -61,7 +57,7 @@ public class ClienteService {
         cliente.setTelefones(dto.getTelefones() != null ? dto.getTelefones() : cliente.getTelefones());
         cliente.setEmails(dto.getEmails() != null ? dto.getEmails() : cliente.getEmails());
         cliente.setCpf(!isEmptyOrNull(dto.getCpf()) ? dto.getCpf() : cliente.getCpf());
-        cliente.setNome(!isEmptyOrNull(dto.getNome()) ? dto.getCpf() : cliente.getNome());
+        cliente.setNome(!isEmptyOrNull(dto.getNome()) ? dto.getNome() : cliente.getNome());
         return cliente;
     }
 }

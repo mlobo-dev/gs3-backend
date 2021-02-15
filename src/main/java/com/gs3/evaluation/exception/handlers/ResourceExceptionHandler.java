@@ -27,7 +27,7 @@ public class ResourceExceptionHandler {
 
         StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
                 "Object already exists", e.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
     }
 
     @ExceptionHandler(DataIntegrityException.class)

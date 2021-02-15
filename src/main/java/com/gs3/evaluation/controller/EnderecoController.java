@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class EnderecoController {
 
     @GetMapping("/{cep}")
     @ApiOperation("Rota para consultar na ViaCep Ws o endereco informando o CEP.")
-    public ResponseEntity<EnderecoDTO> buscarViaCep(String cep) {
+    public ResponseEntity<EnderecoDTO> buscarViaCep(@PathVariable("cep") String cep) {
         return ResponseEntity.ok(mapper.toDto(enderecoService.buscarViaCep(cep)));
     }
 

@@ -26,6 +26,10 @@ public class Cliente {
     @JoinColumn(name = "COD_ENDERECO")
     private Endereco endereco;
 
+    @ManyToOne
+    @JoinColumn(name = "COD_USUARIO")
+    private Usuario usuario;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "TB_CLIENTE_TELEFONES",
             joinColumns = @JoinColumn(name = "COD_CLIENTE"),

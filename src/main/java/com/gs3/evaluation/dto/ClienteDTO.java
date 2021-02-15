@@ -18,7 +18,7 @@ public class ClienteDTO {
 
     @NotNull(message = "Nome é obrigatório")
     @NotEmpty(message = "Nome é obrigatório")
-    @Size(min =3,max = 100,message = "O nome deve conter entre 3 e 100 caracteres")
+    @Size(min = 3, max = 100, message = "O nome deve conter entre 3 e 100 caracteres")
     private String nome;
 
     @CPF(message = "Cpf inválido")
@@ -31,8 +31,11 @@ public class ClienteDTO {
     private EnderecoDTO endereco;
 
     @NotNull(message = "Ao menos 1 telefone deve ser cadastrado")
-    private List< @Valid TelefoneDTO> telefones = new ArrayList<>();
+    private List<@Valid TelefoneDTO> telefones = new ArrayList<>();
 
     @NotNull(message = "Ao menos 1 email deve ser cadastrado")
-    private List<@Valid  EmailDTO> emails = new ArrayList<>();
+    private List<@Valid EmailDTO> emails = new ArrayList<>();
+
+    @NotNull(message = "Id do usuário é obrigatório.")
+    private Long idUsuario;
 }

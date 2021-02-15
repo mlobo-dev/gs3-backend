@@ -43,7 +43,7 @@ public class ClienteController {
 
     @PostMapping
     @ApiOperation("Salva um novo cliente")
-    public ResponseEntity<ClienteDTO> salvar(@Valid @RequestBody ClienteCadastroDTO dto) {
+    public ResponseEntity<ClienteDTO> salvar(@Valid @RequestBody ClienteDTO dto) {
         return ResponseEntity.ok(mapper.toDto(service.salvar(dto)));
     }
 
