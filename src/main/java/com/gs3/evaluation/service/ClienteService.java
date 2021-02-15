@@ -43,7 +43,7 @@ public class ClienteService {
         }
 
         Cliente cliente = mapper.toEntity(dto);
-        cliente.setUsuario(usuarioService.buscarPeloId(dto.getIdUsuario()));
+        cliente.setUsuario(usuarioService.buscarPeloId(dto.getUsuario().getId()));
 
         return repository.save(cliente);
     }

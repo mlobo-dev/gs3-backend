@@ -36,6 +36,7 @@ public class ClienteDTO {
     @NotNull(message = "Ao menos 1 email deve ser cadastrado")
     private List<@Valid EmailDTO> emails = new ArrayList<>();
 
-    @NotNull(message = "Id do usuário é obrigatório.")
-    private Long idUsuario;
+
+    @NotNull(message = "usuário é obrigatório.")
+    private @Valid UsuarioDTO usuario;
 }
