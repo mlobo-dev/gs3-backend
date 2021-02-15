@@ -2,19 +2,19 @@ package com.gs3.evaluation.dto;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
-@Entity
-@Table(name = "TB_EMAIL")
 public class EmailDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COD_EMAIL")
+
     private Long id;
 
-    @Column(name = "ENDERECO_EMAIL")
-    private String endereco;
+    @Email(message = "Email inválido")
+    @NotNull(message = "Endereço do email é obrigatório")
+    @NotEmpty(message = "Endereço do email é obrigatório")
+    private String enderecoEmail;
 
 }

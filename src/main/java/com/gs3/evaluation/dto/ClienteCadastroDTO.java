@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ClienteDTO {
+public class ClienteCadastroDTO {
 
 
     private Long id;
@@ -26,17 +26,15 @@ public class ClienteDTO {
     @NotEmpty(message = "cpf é obrigatório")
     private String cpf;
 
-    @NotNull(message = "Endereço é é obrigatório")
-    @Valid
-    private EnderecoDTO endereco;
+    @NotNull(message = "Nome é obrigatório")
+    @NotEmpty(message = "Nome é obrigatório")
+    private String cep;
+
+    private String complementoEndereco;
 
     @NotNull(message = "Ao menos 1 telefone deve ser cadastrado")
     private List<@Valid TelefoneDTO> telefones = new ArrayList<>();
 
     @NotNull(message = "Ao menos 1 email deve ser cadastrado")
     private List<@Valid EmailDTO> emails = new ArrayList<>();
-
-
-    @NotNull(message = "usuário é obrigatório.")
-    private @Valid UsuarioDTO usuario;
 }

@@ -22,18 +22,22 @@ public class Cliente {
     @Column(name = "CPF")
     private String cpf;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COD_ENDERECO")
     private Endereco endereco;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "COD_USUARIO")
+    private Usuario usuario;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "TB_CLIENTE_TELEFONES",
             joinColumns = @JoinColumn(name = "COD_CLIENTE"),
             inverseJoinColumns = @JoinColumn(name = "COD_TELEFONE")
     )
     private List<Telefone> telefones = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "TB_CLIENTE_EMAILS",
             joinColumns = @JoinColumn(name = "COD_CLIENTE"),
             inverseJoinColumns = @JoinColumn(name = "COD_EMAIL")
