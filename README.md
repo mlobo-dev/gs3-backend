@@ -16,11 +16,11 @@ ou <b>dev</b> para subir em seu banco local postgres
 obs.: Não se esquece de alterar profile :)    
 
 
-#Docker
-    $ docker-compose up    
+# Docker
+     docker-compose up    
     
 
-##Usuarios de teste
+## Usuarios de teste
 * Administrador
     * login: admin
     * senha:123456
